@@ -1,13 +1,12 @@
-package repo;
+package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "students")
 public class StudentEntity {
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String age;
@@ -54,5 +53,15 @@ public class StudentEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age='" + age + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

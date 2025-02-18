@@ -3,7 +3,7 @@ package util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import repo.StudentEntity;
+import entity.StudentEntity;
 
 public class FactoryConfiguration {
     private static FactoryConfiguration instance;

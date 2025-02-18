@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import dto.StudentDTO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import repo.StudentEntity;
+import entity.StudentEntity;
+import service.StudentService;
 import util.FactoryConfiguration;
 
 import javax.servlet.ServletException;
@@ -18,30 +19,32 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/student")
 public class StudentAPI extends HttpServlet {
 
+    private StudentService studentService;
+
+    public StudentAPI(){
+        //constructor through Dependency Injection - but inefficient way to do this.
+        this.studentService = new StudentService();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //This Api Layer do the catching the Http request and convert into manageable java object
+        //This is the only responsibility that this layer has according to solid principles
+        //Also do Exception handling
         if(req.getHeader("Content-Type").equals("application/json")){
             BufferedReader reader = req.getReader();
             StudentDTO studentDTO = new Gson().fromJson(reader, StudentDTO.class);
-
-            StudentEntity studentEntity = new StudentEntity();
-            studentEntity.setId(studentDTO.getId());
-            studentEntity.setName(studentDTO.getName());
-            studentEntity.setAge((studentDTO.getAge()));
-            studentEntity.setAddress(studentDTO.getAddress());
-
-            try{
-                Session session = FactoryConfiguration.getInstance().getSession();
-                Transaction transaction = session.beginTransaction();
-                session.save(studentEntity);
-                transaction.commit();
-                resp.getWriter().print("done");
-            }catch (Exception ex){
-                ex.printStackTrace();
+            StudentDTO savedStudent = studentService.saveStudent(studentDTO);
+            if(savedStudent != null){
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+                resp.getWriter().write(new Gson().toJson(savedStudent));
+            }else{
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("Something went wrong");
             }
         }
     }
