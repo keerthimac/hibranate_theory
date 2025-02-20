@@ -48,4 +48,21 @@ public class StudentAPI extends HttpServlet {
             }
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getHeader("Content-Type").equals("application/json")){
+            BufferedReader reader = req.getReader();
+            StudentDTO studentDTO = new Gson().fromJson(reader, StudentDTO.class);
+            StudentDTO updatedStudent = studentService.updateStudent(studentDTO);
+            if(updatedStudent != null){
+                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+                resp.getWriter().write(new Gson().toJson(updatedStudent));
+                resp.getWriter().flush();
+            }else{
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("Something went wrong");
+            }
+        }
+    }
 }

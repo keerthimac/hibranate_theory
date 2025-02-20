@@ -16,4 +16,10 @@ public class StudentRepository {
         }
         return null;
     }
+
+    public StudentEntity search(int studentEntity, Session session) {
+        return session.get(StudentEntity.class,studentEntity);
+
+    }
+
 }
