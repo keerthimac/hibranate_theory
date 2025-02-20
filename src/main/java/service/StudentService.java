@@ -38,7 +38,7 @@ public class StudentService {
             if(transaction != null) transaction.rollback();
             ex.printStackTrace();
         }finally {
-            if(session != null) session.close();
+            if(session != null && session.isOpen()) session.close();
         }
         return null;
     }
