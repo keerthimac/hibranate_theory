@@ -18,9 +18,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/student")
 public class StudentAPI extends HttpServlet {
-
     private StudentService studentService;
-
     public StudentAPI(){
         //constructor through Dependency Injection - but inefficient way to do this.
         this.studentService = new StudentService();

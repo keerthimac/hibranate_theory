@@ -18,15 +18,15 @@ public class CommonAPI extends HttpServlet {
     private CommonService commonService;
     public CommonAPI() {
         this.commonService = new CommonService();
+        FactoryConfiguration.getInstance();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FactoryConfiguration.getInstance();
         if(req.getHeader("Content-Type").equals("application/json")){
             BufferedReader reader = req.getReader();
             CommonDTO commonDTO = new Gson().fromJson(reader, CommonDTO.class);
-            CommonService.saveCommonDetails(commonDTO);
+            commonService.saveCommonDetails(commonDTO);
             resp.getWriter().write("done");
         }
     }

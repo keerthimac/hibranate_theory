@@ -20,6 +20,13 @@ public class NationalIdentityCard {
     public NationalIdentityCard() {
     }
 
+    public NationalIdentityCard(String number, String name, String address, Licence licence) {
+        this.setNumber(number);
+        this.setName(name);
+        this.setAddress(address);
+        this.setLicence(licence);
+    }
+
     public String getNumber() {
         return number;
     }
@@ -42,5 +49,23 @@ public class NationalIdentityCard {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Licence getLicence() {
+        return licence;
+    }
+
+    public void setLicence(Licence licence) {
+        this.licence = licence;
+    }
+
+    @Override
+    public String toString() {
+        return "NationalIdentityCard{" +
+                "number='" + getNumber() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", address='" + getAddress() + '\'' +
+                ", licence=" + getLicence() +
+                '}';
     }
 }

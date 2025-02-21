@@ -6,17 +6,24 @@ import entity.NationalIdentityCard;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repo.LicenceRepository;
+import repo.NationalIdRepository;
 import util.FactoryConfiguration;
 
 public class CommonService {
 
-    private static LicenceRepository licenceRepository;
+    LicenceRepository licenceRepository;
+    NationalIdRepository nic;
+
     public CommonService() {
         this.licenceRepository = new LicenceRepository();
+        this.nic = new NationalIdRepository();
+
     }
 
-    public static void saveCommonDetails(CommonDTO commonDTO) {
+    public void saveCommonDetails(CommonDTO commonDTO) {
         Licence licence = new Licence();
+
+        licence.setNumber(commonDTO.getLicenceNumber());
         licence.setBloodGroup(commonDTO.getBloodGroup());
 
         NationalIdentityCard nationalIdentityCard = new NationalIdentityCard();
@@ -24,9 +31,8 @@ public class CommonService {
         nationalIdentityCard.setName(commonDTO.getName());
         nationalIdentityCard.setAddress(commonDTO.getAddress());
 
-        nationalIdentityCard.setNumber(commonDTO.getLicenceNumber());
         licence.setNic(nationalIdentityCard);
-
+        //nationalIdentityCard.setLicence(licence);
 
         Session session =null;
         Transaction transaction = null;
@@ -34,7 +40,11 @@ public class CommonService {
         try{
             session = FactoryConfiguration.getInstance().getSession();
             transaction = session.beginTransaction();
-            Licence save = licenceRepository.save(session, licence);
+            //NationalIdentityCard save = nic.save(session, nationalIdentityCard);
+            Licence savedLicence = licenceRepository.save(session,licence);
+            if(savedLicence != null){
+                transaction.commit();
+            }
         }catch (Exception ex){
             if(transaction != null) transaction.rollback();
             ex.printStackTrace();

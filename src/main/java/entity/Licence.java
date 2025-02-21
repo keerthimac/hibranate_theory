@@ -6,28 +6,29 @@ import javax.persistence.*;
 public class Licence {
     @Id
     @Column(length = 7)
-    private String number;
+    private String lNumber;
     @Column(length = 4)
     private String bloodGroup;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false , cascade = CascadeType.ALL)
     @JoinColumn(name = "nic_number")
     private NationalIdentityCard nic;
 
     public Licence(String number, String bloodGroup, NationalIdentityCard nic) {
-        this.number = number;
-        this.bloodGroup = bloodGroup;
+        this.setlNumber(number);
+        this.setBloodGroup(bloodGroup);
         this.setNic(nic);
     }
 
     public Licence() {
     }
 
+
     public String getNumber() {
-        return number;
+        return getlNumber();
     }
 
     public void setNumber(String number) {
-        this.number = number;
+        this.setlNumber(number);
     }
 
     public String getBloodGroup() {
@@ -44,5 +45,22 @@ public class Licence {
 
     public void setNic(NationalIdentityCard nic) {
         this.nic = nic;
+    }
+
+    @Override
+    public String toString() {
+        return "Licence{" +
+                "lNumber='" + getlNumber() + '\'' +
+                ", bloodGroup='" + getBloodGroup() + '\'' +
+                ", nic=" + getNic() +
+                '}';
+    }
+
+    public String getlNumber() {
+        return lNumber;
+    }
+
+    public void setlNumber(String lNumber) {
+        this.lNumber = lNumber;
     }
 }
