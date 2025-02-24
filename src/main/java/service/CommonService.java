@@ -2,21 +2,21 @@ package service;
 
 import dto.CommonDTO;
 import entity.Licence;
-import entity.NationalIdentityCard;
+import entity.NicEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repo.LicenceRepository;
-import repo.NationalIdRepository;
+import repo.NicRepo;
 import util.FactoryConfiguration;
 
 public class CommonService {
 
     LicenceRepository licenceRepository;
-    NationalIdRepository nic;
+    NicRepo nic;
 
     public CommonService() {
         this.licenceRepository = new LicenceRepository();
-        this.nic = new NationalIdRepository();
+        this.nic = new NicRepo();
 
     }
 
@@ -26,12 +26,12 @@ public class CommonService {
         licence.setNumber(commonDTO.getLicenceNumber());
         licence.setBloodGroup(commonDTO.getBloodGroup());
 
-        NationalIdentityCard nationalIdentityCard = new NationalIdentityCard();
-        nationalIdentityCard.setNumber(commonDTO.getNicNumber());
-        nationalIdentityCard.setName(commonDTO.getName());
-        nationalIdentityCard.setAddress(commonDTO.getAddress());
+        NicEntity nicEntity = new NicEntity();
+        nicEntity.setNumber(commonDTO.getNicNumber());
+        nicEntity.setName(commonDTO.getName());
+        nicEntity.setAddress(commonDTO.getAddress());
 
-        licence.setNic(nationalIdentityCard);
+        licence.setNic(nicEntity);
         //nationalIdentityCard.setLicence(licence);
 
         Session session =null;

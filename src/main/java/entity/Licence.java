@@ -11,9 +11,9 @@ public class Licence {
     private String bloodGroup;
     @OneToOne(optional = false , cascade = CascadeType.ALL)
     @JoinColumn(name = "nic_number")
-    private NationalIdentityCard nic;
+    private NicEntity nic;
 
-    public Licence(String number, String bloodGroup, NationalIdentityCard nic) {
+    public Licence(String number, String bloodGroup, NicEntity nic) {
         this.setlNumber(number);
         this.setBloodGroup(bloodGroup);
         this.setNic(nic);
@@ -39,11 +39,11 @@ public class Licence {
         this.bloodGroup = bloodGroup;
     }
 
-    public NationalIdentityCard getNic() {
+    public NicEntity getNic() {
         return nic;
     }
 
-    public void setNic(NationalIdentityCard nic) {
+    public void setNic(NicEntity nic) {
         this.nic = nic;
     }
 

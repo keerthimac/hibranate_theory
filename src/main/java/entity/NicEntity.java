@@ -1,12 +1,10 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
-public class NationalIdentityCard {
+@Table(name = "nic")
+public class NicEntity {
     @Id
     @Column(length = 12)
     private String number;
@@ -17,10 +15,10 @@ public class NationalIdentityCard {
     @OneToOne(targetEntity = Licence.class,mappedBy = "nic")
     private Licence licence;
 
-    public NationalIdentityCard() {
+    public NicEntity() {
     }
 
-    public NationalIdentityCard(String number, String name, String address, Licence licence) {
+    public NicEntity(String number, String name, String address, Licence licence) {
         this.setNumber(number);
         this.setName(name);
         this.setAddress(address);
